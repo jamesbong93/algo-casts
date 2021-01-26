@@ -8,6 +8,52 @@
 // Example:
 //   fib(4) === 3
 
-function fib(n) {}
+// Iterative solutiion - O(n) linear time
+// function fib(n) {
+//     const fibResult = [0, 1]
+
+//     for (let i = 2; i <= n; i++) {
+//         fibResult.push(fibResult[i-1] + fibResult[i-2])
+//     }
+
+//     console.log(fibResult)
+
+//     return fibResult[n]
+// }
+
+// Recursive solution - O(2*n) exponential time
+// function fib(n) {
+//     if (n < 2) {
+//         return n
+//     }
+
+//     return fib(n-1) + fib(n-2)
+// }
+
+// Recursive solution - with memoize. Store the result function into cache
+function memoize(fn) {
+    const cache = {}
+
+    return function(...args) {
+        if (cache[args]) {
+            return cache[args]
+        }
+
+        const result = fn.apply(this, args)
+        cache[args] = result
+
+        return result
+    }
+}
+
+function fib(n) {
+    if (n < 2) {
+        return n
+    }
+
+    return fib(n-1) + fib(n-2)
+}
+
+fib = memoize(fib)
 
 module.exports = fib;
